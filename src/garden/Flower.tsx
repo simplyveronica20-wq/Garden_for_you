@@ -77,76 +77,8 @@ export function Flower({ type, state, rare, size = 80, index = 0 }: FlowerProps)
   const isBlooming = state === 'blooming';
   const isBloomed = state === 'bloomed' || petalsUnfurled;
 
-  // Bud / locked appearance
-  if (state === 'bud' || state === 'locked') {
-    return (
-      <svg width={size} height={size} viewBox="0 0 100 100" className="no-select">
-        <defs>
-          <linearGradient id={ids.stem} x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#5a8a48" />
-            <stop offset="50%" stopColor="#7eb86a" />
-            <stop offset="100%" stopColor="#4a7a3a" />
-          </linearGradient>
-          <linearGradient id={ids.leaf} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#9fd08a" />
-            <stop offset="100%" stopColor="#5a8a48" />
-          </linearGradient>
-          <radialGradient id={ids.bud} cx="0.4" cy="0.35">
-            <stop offset="0%" stopColor={palette.petalLight} />
-            <stop offset="60%" stopColor={palette.petal} />
-            <stop offset="100%" stopColor={palette.petalDark} />
-          </radialGradient>
-        </defs>
-        {/* stem */}
-        <path
-          d="M50 100 Q48 80 50 60"
-          stroke={`url(#${ids.stem})`}
-          strokeWidth="3.5"
-          fill="none"
-          strokeLinecap="round"
-        />
-        {/* leaf */}
-        <path
-          d="M50 78 Q38 70 32 80 Q40 86 50 82 Z"
-          fill={`url(#${ids.leaf})`}
-          stroke="#4a7a3a"
-          strokeWidth="0.5"
-        />
-        <path d="M50 80 Q40 76 34 80" stroke="#4a7a3a" strokeWidth="0.5" fill="none" opacity="0.5" />
-        {/* bud */}
-        <g
-          style={{
-            transformOrigin: '50px 52px',
-            animation: state === 'locked' ? 'bud-shake 2.5s ease-in-out infinite' : 'none',
-          }}
-        >
-          <path
-            d="M50 32 Q38 44 50 60 Q62 44 50 32"
-            fill={`url(#${ids.bud})`}
-            stroke={palette.petalDark}
-            strokeWidth="0.8"
-          />
-          <path
-            d="M50 34 Q44 46 50 58"
-            stroke={palette.petalDark}
-            strokeWidth="0.6"
-            fill="none"
-            opacity="0.5"
-          />
-          {/* sepals (green base) */}
-          <path d="M50 58 Q44 56 42 62 Q50 64 50 60" fill="#6f9c63" opacity="0.85" />
-          <path d="M50 58 Q56 56 58 62 Q50 64 50 60" fill="#5a8a48" opacity="0.85" />
-          {state === 'locked' && (
-            <circle cx="50" cy="48" r="5" fill="#f5d76e" opacity="0.55" className="anim-shimmer" />
-          )}
-        </g>
-      </svg>
-    );
-  }
-
-  // Bloomed / blooming — rendered as a real photographic flower for a
-  // realistic garden look, with a soft faded edge so it sits naturally
-  // in the grass, plus the same sparkle burst + sway/breathe animation.
+  // Both bud and bloomed states will share the same SVG wrapper so the stem and leaf 
+  // stay grounded, and gradients are always defined.
   return (
     <div
       className={`no-select ${rare ? 'anim-glow' : ''}`}
@@ -157,6 +89,8 @@ export function Flower({ type, state, rare, size = 80, index = 0 }: FlowerProps)
         transformOrigin: '50% 100%',
         animation: isBloomed
           ? `${rare ? 'breathe 4s ease-in-out infinite' : 'sway 5s ease-in-out infinite'}`
+          : state === 'locked'
+          ? 'bud-shake 2.5s ease-in-out infinite'
           : 'none',
         animationDelay: `${index * 0.3}s`,
       }}
@@ -173,14 +107,86 @@ export function Flower({ type, state, rare, size = 80, index = 0 }: FlowerProps)
             : 'drop-shadow(0 4px 8px rgba(36,24,68,0.25)) saturate(1.1)',
         }}
       >
-        <FlowerHead
-          type={type}
-          palette={palette}
-          unfurled={petalsUnfurled}
-          rare={rare}
-          index={index}
-          ids={ids}
+        <defs>
+          <linearGradient id={ids.stem} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#5a8a48" />
+            <stop offset="50%" stopColor="#7eb86a" />
+            <stop offset="100%" stopColor="#4a7a3a" />
+          </linearGradient>
+          <linearGradient id={ids.leaf} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#9fd08a" />
+            <stop offset="100%" stopColor="#5a8a48" />
+          </linearGradient>
+          <radialGradient id={ids.bud} cx="0.4" cy="0.35">
+            <stop offset="0%" stopColor={palette.petalLight} />
+            <stop offset="60%" stopColor={palette.petal} />
+            <stop offset="100%" stopColor={palette.petalDark} />
+          </radialGradient>
+          <radialGradient id={ids.petal} cx="0.5" cy="0.9">
+            <stop offset="0%" stopColor={palette.center} />
+            <stop offset="40%" stopColor={palette.petalDark} />
+            <stop offset="100%" stopColor={palette.petalLight} />
+          </radialGradient>
+          <radialGradient id={ids.center} cx="0.4" cy="0.4">
+            <stop offset="0%" stopColor={palette.center} />
+            <stop offset="100%" stopColor={palette.centerDark} />
+          </radialGradient>
+        </defs>
+
+        {/* stem */}
+        <path
+          d="M50 100 Q48 80 50 60"
+          stroke={`url(#${ids.stem})`}
+          strokeWidth="3.5"
+          fill="none"
+          strokeLinecap="round"
         />
+        {/* leaf */}
+        <path
+          d="M50 78 Q38 70 32 80 Q40 86 50 82 Z"
+          fill={`url(#${ids.leaf})`}
+          stroke="#4a7a3a"
+          strokeWidth="0.5"
+        />
+        <path d="M50 80 Q40 76 34 80" stroke="#4a7a3a" strokeWidth="0.5" fill="none" opacity="0.5" />
+
+        {(state === 'bud' || state === 'locked') ? (
+          <g style={{ transformOrigin: '50px 52px' }}>
+            <path
+              d="M50 32 Q38 44 50 60 Q62 44 50 32"
+              fill={`url(#${ids.bud})`}
+              stroke={palette.petalDark}
+              strokeWidth="0.8"
+            />
+            <path
+              d="M50 34 Q44 46 50 58"
+              stroke={palette.petalDark}
+              strokeWidth="0.6"
+              fill="none"
+              opacity="0.5"
+            />
+            {/* sepals (green base) */}
+            <path d="M50 58 Q44 56 42 62 Q50 64 50 60" fill="#6f9c63" opacity="0.85" />
+            <path d="M50 58 Q56 56 58 62 Q50 64 50 60" fill="#5a8a48" opacity="0.85" />
+            {state === 'locked' && (
+              <circle cx="50" cy="48" r="5" fill="#f5d76e" opacity="0.55" className="anim-shimmer" />
+            )}
+          </g>
+        ) : (
+          <>
+            {/* sepals underneath the bloomed flower */}
+            <path d="M50 58 Q44 56 42 62 Q50 64 50 60" fill="#6f9c63" opacity="0.85" />
+            <path d="M50 58 Q56 56 58 62 Q50 64 50 60" fill="#5a8a48" opacity="0.85" />
+            <FlowerHead
+              type={type}
+              palette={palette}
+              unfurled={petalsUnfurled}
+              rare={rare}
+              index={index}
+              ids={ids}
+            />
+          </>
+        )}
       </svg>
 
       {/* bloom sparkle burst during blooming */}
