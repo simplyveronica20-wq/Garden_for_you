@@ -498,39 +498,43 @@ function House() {
 function GrassField() {
   const blades = useMemo(
     () =>
-      Array.from({ length: 60 }).map(() => ({
-        x: Math.random() * 100,
-        y: 58 + Math.random() * 40,
-        h: 10 + Math.random() * 16,
-        tilt: -12 + Math.random() * 24,
-        shade: Math.random() > 0.5 ? '#4a8a3a' : '#6fae52',
+      Array.from({ length: 120 }).map(() => ({
+        x: Math.random() * 1440,
+        y: 350 + Math.random() * 160,
+        h: 20 + Math.random() * 25,
+        tilt: -20 + Math.random() * 40,
+        shade: Math.random() > 0.5 ? '#5c9c45' : '#7abd5a',
       })),
     [],
   );
 
   return (
     <svg
-      viewBox="0 0 100 100"
+      viewBox="0 0 1440 500"
       className="absolute inset-0 w-full h-full no-select pointer-events-none"
       preserveAspectRatio="none"
     >
-      {/* soft ground shading so the grass has some depth */}
-      <rect x="0" y="55" width="100" height="45" fill="url(#grass-gradient)" opacity="0.4" />
       <defs>
         <linearGradient id="grass-gradient" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#a3d674" />
           <stop offset="100%" stopColor="#4a8a3a" />
         </linearGradient>
       </defs>
+      
+      {/* soft curved ground so there's no harsh horizontal seam line */}
+      <path
+        d="M 0 360 Q 360 320 720 340 T 1440 330 V 500 H 0 Z"
+        fill="url(#grass-gradient)"
+        opacity="0.6"
+      />
+
+      {/* elegant tapering grass blades */}
       {blades.map((b, i) => (
         <path
           key={i}
-          d={`M${b.x} ${b.y + b.h * 0.06} Q${b.x + b.tilt * 0.06} ${b.y - b.h * 0.5} ${b.x + b.tilt * 0.12} ${b.y - b.h * 0.12}`}
-          stroke={b.shade}
-          strokeWidth="0.5"
-          fill="none"
-          strokeLinecap="round"
-          opacity="0.7"
+          d={`M ${b.x} ${b.y} Q ${b.x + b.tilt * 0.5} ${b.y - b.h * 0.5} ${b.x + b.tilt} ${b.y - b.h} Q ${b.x + b.tilt * 0.5 + 2} ${b.y - b.h * 0.5} ${b.x + 4} ${b.y} Z`}
+          fill={b.shade}
+          opacity="0.85"
         />
       ))}
     </svg>
