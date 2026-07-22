@@ -122,12 +122,11 @@ export function GardenGate({ onEnter }: GateProps) {
       <button
         onClick={handleOpen}
         disabled={opening}
-        className={`relative z-10 mt-8 px-8 py-3 rounded-full font-body font-semibold text-twilight bg-cream/90 spring hover:scale-105 hover:bg-cream shadow-lg ${
+        className={`relative z-10 mt-12 px-10 py-3.5 rounded-full font-serif italic text-2xl text-ink bg-gradient-to-r from-cream via-[#fbf7ec] to-cream spring hover:scale-110 hover:shadow-[0_0_40px_rgba(255,245,208,0.8)] shadow-[0_0_20px_rgba(255,245,208,0.4)] border border-[#d9c08a] ${
           opening ? 'opacity-0' : 'opacity-100'
         }`}
-        style={{ boxShadow: '0 0 20px rgba(255,245,208,0.4)' }}
       >
-        Open the Gate
+        Enter the Garden
       </button>
 
       {/* zoom-through transition overlay */}

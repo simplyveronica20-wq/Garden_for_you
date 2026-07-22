@@ -5,8 +5,8 @@ export default {
     extend: {
       fontFamily: {
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        script: ['"Caveat"', 'cursive'],
-        body: ['"Quicksand"', 'system-ui', 'sans-serif'],
+        script: ['"Great Vibes"', 'cursive'],
+        body: ['"Cormorant Garamond"', 'Georgia', 'serif'],
       },
       colors: {
         cream: '#fbf3e4',
