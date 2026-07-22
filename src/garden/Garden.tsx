@@ -7,7 +7,7 @@
 // ============================================================
 
 import { useEffect, useMemo, useState } from 'react';
-import { FLOWERS, FIREFLY_SURPRISES, FlowerMessage, GARDEN_BACKGROUND_PHOTO } from './flowers';
+import { FLOWERS, FIREFLY_SURPRISES, FlowerMessage } from './flowers';
 import { Flower, BloomState } from './Flower';
 import { MessageCard } from './MessageCard';
 import { Fireflies, Butterfly, PetalFirework } from './Ambient';
@@ -99,24 +99,18 @@ export function Garden({ state, audio }: GardenProps) {
     <div
       className="relative min-h-screen w-full overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(180deg, rgba(109,79,140,0.55) 0%, rgba(157,127,199,0.25) 18%, rgba(0,0,0,0) 38%, rgba(0,0,0,0) 70%, rgba(20,30,10,0.35) 100%), url(${GARDEN_BACKGROUND_PHOTO})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        background:
+          'linear-gradient(180deg, #bfe6f5 0%, #d9f0e0 22%, #eaf5c9 38%, #cde8a8 52%, #a8cf82 68%, #7fb85f 85%, #5a9a48 100%)',
       }}
     >
-      {/* low sun glow */}
-      <div
-        className="absolute rounded-full pointer-events-none"
-        style={{
-          width: 220,
-          height: 220,
-          top: '8%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          background:
-            'radial-gradient(circle, rgba(255,245,208,0.7) 0%, rgba(255,220,130,0.3) 40%, rgba(255,220,130,0) 70%)',
-        }}
-      />
+      {/* radiant sun at the top of the sky */}
+      <Sun />
+
+      {/* layered mountains, sitting behind the grass */}
+      <Mountains />
+
+      {/* grass texture across the foreground */}
+      <GrassField />
 
       {/* butterflies */}
       <Butterfly color="#f6c6d4" delay={0} />
@@ -305,81 +299,150 @@ function GardenSign({ count, total }: { count: number; total: number }) {
   );
 }
 
-// ---------- Tree silhouettes ----------
-function TreeSilhouette({ className = '', side }: { className?: string; side: 'left' | 'right' }) {
-  const treeId = `tree-${side}`;
+// ---------- Sun ----------
+function Sun() {
+  return (
+    <div
+      className="absolute pointer-events-none"
+      style={{ top: '4%', left: '50%', transform: 'translateX(-50%)', width: 340, height: 340 }}
+    >
+      {/* soft radiant glow */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            'radial-gradient(circle, rgba(255,250,220,0.95) 0%, rgba(255,235,160,0.55) 30%, rgba(255,220,130,0.22) 55%, rgba(255,220,130,0) 75%)',
+        }}
+      />
+      {/* sun rays */}
+      <svg viewBox="0 0 340 340" className="absolute inset-0" style={{ animation: 'breathe 6s ease-in-out infinite' }}>
+        {Array.from({ length: 12 }).map((_, i) => {
+          const angle = (360 / 12) * i;
+          return (
+            <line
+              key={i}
+              x1="170"
+              y1="170"
+              x2="170"
+              y2="18"
+              stroke="rgba(255,245,208,0.5)"
+              strokeWidth="3"
+              strokeLinecap="round"
+              transform={`rotate(${angle} 170 170)`}
+            />
+          );
+        })}
+      </svg>
+      {/* sun core */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          top: '38%',
+          left: '38%',
+          width: '24%',
+          height: '24%',
+          background: 'radial-gradient(circle at 35% 35%, #fffdf0 0%, #fff2b8 55%, #ffdf87 100%)',
+          boxShadow: '0 0 40px 14px rgba(255,240,180,0.7)',
+        }}
+      />
+    </div>
+  );
+}
+
+// ---------- Mountains ----------
+function Mountains() {
   return (
     <svg
-      width="200"
-      height="320"
-      viewBox="0 0 200 320"
-      className={`${className} no-select`}
-      preserveAspectRatio="xMidYMax meet"
+      viewBox="0 0 1440 500"
+      className="absolute left-0 w-full no-select pointer-events-none"
+      style={{ top: '14%', height: '46%' }}
+      preserveAspectRatio="none"
     >
       <defs>
-        <linearGradient id={`${treeId}-trunk`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#3a2a1c" />
-          <stop offset="50%" stopColor="#6a5238" />
-          <stop offset="100%" stopColor="#3a2a1c" />
+        <linearGradient id="mtn-back" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#b9c9e0" />
+          <stop offset="100%" stopColor="#9fb3d1" />
         </linearGradient>
-        <radialGradient id={`${treeId}-leaf`} cx="0.4" cy="0.35">
-          <stop offset="0%" stopColor="#9fd08a" />
-          <stop offset="55%" stopColor="#6f9c63" />
-          <stop offset="100%" stopColor="#3a6a2a" />
-        </radialGradient>
-        <radialGradient id={`${treeId}-leaf-light`} cx="0.4" cy="0.3">
-          <stop offset="0%" stopColor="#c0e8a8" />
-          <stop offset="100%" stopColor="#7eb86a" />
-        </radialGradient>
+        <linearGradient id="mtn-mid" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#8fa6c4" />
+          <stop offset="100%" stopColor="#6f89ac" />
+        </linearGradient>
+        <linearGradient id="mtn-front" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#5a7a94" />
+          <stop offset="100%" stopColor="#425f78" />
+        </linearGradient>
       </defs>
 
-      {/* trunk */}
+      {/* back range, hazy */}
       <path
-        d="M100 320 Q98 260 102 200 Q100 160 104 130"
-        stroke={`url(#${treeId}-trunk)`}
-        strokeWidth="10"
-        strokeLinecap="round"
-        fill="none"
+        d="M0 260 L120 160 L220 230 L340 110 L460 220 L600 90 L720 210 L860 130 L1000 240 L1140 150 L1280 230 L1440 170 V500 H0 Z"
+        fill="url(#mtn-back)"
+        opacity="0.55"
       />
-      {/* bark texture lines */}
-      <path d="M100 300 Q99 260 102 220" stroke="#2a1a0c" strokeWidth="1" fill="none" opacity="0.4" />
-      <path d="M103 280 Q102 240 105 200" stroke="#2a1a0c" strokeWidth="0.8" fill="none" opacity="0.3" />
-
-      {/* branches */}
+      {/* snow caps, back range */}
       <path
-        d="M101 200 Q80 180 60 185 M102 180 Q124 165 140 172 M101 160 Q88 150 70 155"
-        stroke={`url(#${treeId}-trunk)`}
-        strokeWidth="4"
-        fill="none"
-        strokeLinecap="round"
+        d="M320 130 L340 110 L362 132 L346 128 L338 118 L328 130 Z M580 108 L600 90 L622 112 L606 108 L598 98 L588 110 Z"
+        fill="#fdfdfd"
+        opacity="0.85"
       />
 
-      {/* layered foliage clusters — back (darker) */}
-      <ellipse cx="100" cy="115" rx="78" ry="88" fill={`url(#${treeId}-leaf)`} opacity="0.9" />
-      <ellipse cx="55" cy="140" rx="42" ry="48" fill={`url(#${treeId}-leaf)`} opacity="0.85" />
-      <ellipse cx="145" cy="140" rx="42" ry="48" fill={`url(#${treeId}-leaf)`} opacity="0.85" />
-      <ellipse cx="75" cy="85" rx="38" ry="42" fill={`url(#${treeId}-leaf)`} opacity="0.8" />
-      <ellipse cx="125" cy="85" rx="38" ry="42" fill={`url(#${treeId}-leaf)`} opacity="0.8" />
+      {/* mid range */}
+      <path
+        d="M0 320 L160 210 L280 290 L420 170 L560 300 L700 190 L840 310 L980 200 L1120 320 L1280 220 L1440 300 V500 H0 Z"
+        fill="url(#mtn-mid)"
+        opacity="0.8"
+      />
+      <path
+        d="M400 190 L420 170 L444 194 L426 190 L418 178 L406 192 Z M960 220 L980 200 L1004 224 L986 220 L978 208 L966 222 Z"
+        fill="#fdfdfd"
+        opacity="0.9"
+      />
 
-      {/* front (lighter, adds depth) */}
-      <ellipse cx="100" cy="95" rx="55" ry="60" fill={`url(#${treeId}-leaf-light)`} opacity="0.65" />
-      <ellipse cx="68" cy="120" rx="30" ry="34" fill={`url(#${treeId}-leaf-light)`} opacity="0.5" />
-      <ellipse cx="132" cy="120" rx="30" ry="34" fill={`url(#${treeId}-leaf-light)`} opacity="0.5" />
-      <ellipse cx="100" cy="70" rx="32" ry="36" fill={`url(#${treeId}-leaf-light)`} opacity="0.55" />
+      {/* front range, most saturated */}
+      <path
+        d="M0 380 L200 260 L340 350 L500 230 L660 360 L820 250 L980 370 L1140 260 L1300 350 L1440 280 V500 H0 Z"
+        fill="url(#mtn-front)"
+      />
+      <path
+        d="M480 250 L500 230 L526 256 L506 251 L498 240 L486 253 Z"
+        fill="#fdfdfd"
+        opacity="0.95"
+      />
+    </svg>
+  );
+}
 
-      {/* small leaf bumps for texture */}
-      {[
-        [60, 100], [140, 100], [80, 60], [120, 60], [100, 40],
-        [50, 130], [150, 130], [70, 160], [130, 160],
-      ].map(([cx, cy], i) => (
-        <ellipse
+// ---------- Grass field ----------
+function GrassField() {
+  const blades = useMemo(
+    () =>
+      Array.from({ length: 60 }).map(() => ({
+        x: Math.random() * 100,
+        y: 58 + Math.random() * 40,
+        h: 10 + Math.random() * 16,
+        tilt: -12 + Math.random() * 24,
+        shade: Math.random() > 0.5 ? '#4a8a3a' : '#6fae52',
+      })),
+    [],
+  );
+
+  return (
+    <svg
+      viewBox="0 0 100 100"
+      className="absolute inset-0 w-full h-full no-select pointer-events-none"
+      preserveAspectRatio="none"
+    >
+      {/* soft ground shading so the grass has some depth */}
+      <rect x="0" y="55" width="100" height="45" fill="#7fb85f" opacity="0.25" />
+      {blades.map((b, i) => (
+        <path
           key={i}
-          cx={cx}
-          cy={cy}
-          rx="14"
-          ry="16"
-          fill={`url(#${treeId}-leaf-light)`}
-          opacity="0.45"
+          d={`M${b.x} ${b.y + b.h * 0.06} Q${b.x + b.tilt * 0.06} ${b.y - b.h * 0.5} ${b.x + b.tilt * 0.12} ${b.y - b.h * 0.12}`}
+          stroke={b.shade}
+          strokeWidth="0.5"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.7"
         />
       ))}
     </svg>
