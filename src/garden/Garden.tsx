@@ -110,8 +110,11 @@ export function Garden({ state, audio }: GardenProps) {
       <Bird delay={2} top="15%" />
       <Bird delay={14} top="25%" scale={0.6} />
 
-      {/* hazy morning mountains */}
+      {/* hazy morning tall mountains */}
       <Mountains />
+
+      {/* cute countryside house on the right hill */}
+      <House />
 
       {/* vibrant dew-kissed grass field */}
       <GrassField />
@@ -191,13 +194,14 @@ export function Garden({ state, audio }: GardenProps) {
               {/* "today's bloom" tag — always visible on the newest flower */}
               {isTodaysBloom && (
                 <span
-                  className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap px-2.5 py-1 rounded-full font-body font-semibold text-[11px] pointer-events-none anim-fade-in"
+                  className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap px-4 py-2 rounded-full font-body font-bold text-sm pointer-events-none anim-fade-in"
                   style={{
                     bottom: '100%',
-                    marginBottom: 6,
+                    marginBottom: 10,
                     background: 'rgba(255,245,208,0.95)',
                     color: '#5a1a1a',
-                    boxShadow: '0 2px 10px rgba(255,220,130,0.6)',
+                    boxShadow: '0 4px 16px rgba(255,220,130,0.8)',
+                    border: '1px solid #c9a86a',
                   }}
                 >
                   ✨ today's bloom
@@ -392,7 +396,7 @@ function Mountains() {
     <svg
       viewBox="0 0 1440 500"
       className="absolute left-0 w-full no-select pointer-events-none"
-      style={{ top: '14%', height: '46%' }}
+      style={{ top: '8%', height: '52%' }}
       preserveAspectRatio="none"
     >
       <defs>
@@ -416,17 +420,17 @@ function Mountains() {
         </filter>
       </defs>
 
-      {/* back range, distant hazy mountains with smooth peaks */}
+      {/* back range, majestic tall mountains */}
       <path
-        d="M 0 320 Q 150 120 350 280 Q 550 440 750 200 Q 950 -40 1150 220 Q 1300 420 1440 250 V 500 H 0 Z"
+        d="M 0 320 Q 150 -50 350 250 Q 550 400 750 150 Q 950 -120 1150 200 Q 1300 400 1440 180 V 500 H 0 Z"
         fill="url(#mtn-back)"
         opacity="0.8"
         filter="url(#blur-distant)"
       />
 
-      {/* mid range, rolling hills and lower mountains */}
+      {/* mid range, rolling hills and lower peaks */}
       <path
-        d="M 0 350 Q 200 200 450 320 Q 700 440 950 260 Q 1200 80 1440 300 V 500 H 0 Z"
+        d="M 0 350 Q 200 50 450 320 Q 700 440 950 160 Q 1200 20 1440 250 V 500 H 0 Z"
         fill="url(#mtn-mid)"
         opacity="0.9"
         filter="url(#blur-mid)"
@@ -434,10 +438,59 @@ function Mountains() {
 
       {/* front range, rolling foreground hills */}
       <path
-        d="M 0 420 Q 250 320 500 380 Q 750 440 1000 340 Q 1250 240 1440 380 V 500 H 0 Z"
+        d="M 0 420 Q 250 280 500 380 Q 750 440 1000 300 Q 1250 200 1440 380 V 500 H 0 Z"
         fill="url(#mtn-front)"
       />
     </svg>
+  );
+}
+
+// ---------- Countryside House ----------
+function House() {
+  return (
+    <div
+      className="absolute pointer-events-none"
+      style={{
+        right: '12%',
+        bottom: '41%', // sitting right on the front hill
+        width: 120,
+        height: 120,
+        transform: 'scale(0.8)',
+      }}
+    >
+      <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-lg">
+        {/* house body */}
+        <path d="M 20 50 L 80 50 L 80 90 L 20 90 Z" fill="#d9c08a" />
+        {/* wood beams */}
+        <path d="M 20 50 L 20 90 M 80 50 L 80 90 M 20 90 L 80 90 M 20 50 L 80 50" stroke="#5a4a2e" strokeWidth="3" />
+        <path d="M 35 50 L 35 90 M 65 50 L 65 90 M 50 50 L 50 90" stroke="#8a6f4a" strokeWidth="1" opacity="0.5" />
+        {/* chimney */}
+        <rect x="65" y="25" width="12" height="25" fill="#a23b3b" stroke="#5a4a2e" strokeWidth="2" />
+        {/* roof */}
+        <path d="M 10 50 L 50 15 L 90 50 Z" fill="#a23b3b" stroke="#5a4a2e" strokeWidth="3" strokeLinejoin="round" />
+        {/* glowing window */}
+        <rect x="35" y="60" width="12" height="15" rx="2" fill="#fff5d0" stroke="#5a4a2e" strokeWidth="2" />
+        <line x1="41" y1="60" x2="41" y2="75" stroke="#5a4a2e" strokeWidth="2" />
+        <line x1="35" y1="67.5" x2="47" y2="67.5" stroke="#5a4a2e" strokeWidth="2" />
+        {/* window glow */}
+        <circle cx="41" cy="67.5" r="18" fill="#ffdf87" opacity="0.3" filter="blur(4px)" />
+        {/* door */}
+        <path d="M 58 65 L 72 65 L 72 90 L 58 90 Z" fill="#8a6f4a" stroke="#5a4a2e" strokeWidth="2" />
+        <circle cx="70" cy="78" r="1.5" fill="#f5d76e" />
+        
+        {/* smoke animation */}
+        <circle cx="71" cy="20" r="4" fill="white" opacity="0.6">
+          <animate attributeName="cy" values="20;0" dur="4s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.6;0" dur="4s" repeatCount="indefinite" />
+          <animate attributeName="cx" values="71;76" dur="4s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="71" cy="25" r="3" fill="white" opacity="0.6">
+          <animate attributeName="cy" values="25;5" dur="4s" repeatCount="indefinite" begin="2s" />
+          <animate attributeName="opacity" values="0.6;0" dur="4s" repeatCount="indefinite" begin="2s" />
+          <animate attributeName="cx" values="71;66" dur="4s" repeatCount="indefinite" begin="2s" />
+        </circle>
+      </svg>
+    </div>
   );
 }
 
