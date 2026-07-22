@@ -100,24 +100,27 @@ export function Garden({ state, audio }: GardenProps) {
       className="relative min-h-screen w-full overflow-hidden"
       style={{
         background:
-          'linear-gradient(180deg, #bfe6f5 0%, #d9f0e0 22%, #eaf5c9 38%, #cde8a8 52%, #a8cf82 68%, #7fb85f 85%, #5a9a48 100%)',
+          'linear-gradient(180deg, #0d091e 0%, #1e1333 22%, #36245e 38%, #4f3b7b 52%, #63508d 68%, #36504a 85%, #18332a 100%)',
       }}
     >
-      {/* radiant sun at the top of the sky */}
-      <Sun />
+      {/* magical starry sky */}
+      <Stars />
 
-      {/* layered mountains, sitting behind the grass */}
+      {/* glowing moon */}
+      <Moon />
+
+      {/* layered mountains in twilight */}
       <Mountains />
 
-      {/* grass texture across the foreground */}
+      {/* dark enchanted grass field */}
       <GrassField />
 
       {/* butterflies */}
       <Butterfly color="#f6c6d4" delay={0} />
       <Butterfly color="#f5d76e" delay={9} />
 
-      {/* fireflies (clickable easter egg) */}
-      <Fireflies count={4} onClick={handleFirefly} />
+      {/* enchanting fireflies everywhere */}
+      <Fireflies count={15} onClick={handleFirefly} />
 
       {/* garden bed — flowers positioned absolutely */}
       <div className="absolute inset-0 z-10">
@@ -299,50 +302,76 @@ function GardenSign({ count, total }: { count: number; total: number }) {
   );
 }
 
-// ---------- Sun ----------
-function Sun() {
+// ---------- Stars ----------
+function Stars() {
+  const stars = useMemo(
+    () =>
+      Array.from({ length: 100 }).map(() => ({
+        x: Math.random() * 100,
+        y: Math.random() * 65,
+        s: 0.5 + Math.random() * 2,
+        delay: Math.random() * 4,
+      })),
+    [],
+  );
+
+  return (
+    <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+      {stars.map((s, i) => (
+        <circle
+          key={i}
+          cx={`${s.x}%`}
+          cy={`${s.y}%`}
+          r={s.s * 0.15}
+          fill="#fff5d0"
+          style={{
+            animation: `breathe 3s ease-in-out infinite ${s.delay}s`,
+            opacity: 0.6 + Math.random() * 0.4,
+          }}
+        />
+      ))}
+    </svg>
+  );
+}
+
+// ---------- Moon ----------
+function Moon() {
   return (
     <div
       className="absolute pointer-events-none"
-      style={{ top: '4%', left: '50%', transform: 'translateX(-50%)', width: 340, height: 340 }}
+      style={{ top: '6%', left: '50%', transform: 'translateX(-50%)', width: 280, height: 280 }}
     >
-      {/* soft radiant glow */}
+      {/* ethereal moon glow */}
       <div
         className="absolute inset-0 rounded-full"
         style={{
           background:
-            'radial-gradient(circle, rgba(255,250,220,0.95) 0%, rgba(255,235,160,0.55) 30%, rgba(255,220,130,0.22) 55%, rgba(255,220,130,0) 75%)',
+            'radial-gradient(circle, rgba(200,230,255,0.4) 0%, rgba(180,210,255,0.2) 35%, rgba(160,190,255,0.05) 60%, rgba(160,190,255,0) 80%)',
         }}
       />
-      {/* sun rays */}
-      <svg viewBox="0 0 340 340" className="absolute inset-0" style={{ animation: 'breathe 6s ease-in-out infinite' }}>
-        {Array.from({ length: 12 }).map((_, i) => {
-          const angle = (360 / 12) * i;
-          return (
-            <line
-              key={i}
-              x1="170"
-              y1="170"
-              x2="170"
-              y2="18"
-              stroke="rgba(255,245,208,0.5)"
-              strokeWidth="3"
-              strokeLinecap="round"
-              transform={`rotate(${angle} 170 170)`}
-            />
-          );
-        })}
-      </svg>
-      {/* sun core */}
+      {/* crescent moon */}
       <div
         className="absolute rounded-full"
         style={{
-          top: '38%',
-          left: '38%',
-          width: '24%',
-          height: '24%',
-          background: 'radial-gradient(circle at 35% 35%, #fffdf0 0%, #fff2b8 55%, #ffdf87 100%)',
-          boxShadow: '0 0 40px 14px rgba(255,240,180,0.7)',
+          top: '35%',
+          left: '35%',
+          width: '30%',
+          height: '30%',
+          background: 'linear-gradient(135deg, #ffffff 0%, #e0edff 100%)',
+          boxShadow: '0 0 40px 10px rgba(220,240,255,0.6)',
+          clipPath: 'circle(50% at 40% 40%)',
+        }}
+      />
+      {/* moon craters/shadow */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          top: '37%',
+          left: '42%',
+          width: '28%',
+          height: '28%',
+          background: 'rgba(24,35,60,0.6)',
+          filter: 'blur(8px)',
         }}
       />
     </div>
@@ -360,16 +389,16 @@ function Mountains() {
     >
       <defs>
         <linearGradient id="mtn-back" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#b9c9e0" />
-          <stop offset="100%" stopColor="#9fb3d1" />
+          <stop offset="0%" stopColor="#2c1e45" />
+          <stop offset="100%" stopColor="#3d2a5c" />
         </linearGradient>
         <linearGradient id="mtn-mid" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#8fa6c4" />
-          <stop offset="100%" stopColor="#6f89ac" />
+          <stop offset="0%" stopColor="#22183c" />
+          <stop offset="100%" stopColor="#302052" />
         </linearGradient>
         <linearGradient id="mtn-front" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#5a7a94" />
-          <stop offset="100%" stopColor="#425f78" />
+          <stop offset="0%" stopColor="#15122b" />
+          <stop offset="100%" stopColor="#1f183d" />
         </linearGradient>
       </defs>
 
@@ -377,25 +406,25 @@ function Mountains() {
       <path
         d="M0 260 L120 160 L220 230 L340 110 L460 220 L600 90 L720 210 L860 130 L1000 240 L1140 150 L1280 230 L1440 170 V500 H0 Z"
         fill="url(#mtn-back)"
-        opacity="0.55"
+        opacity="0.8"
       />
       {/* snow caps, back range */}
       <path
         d="M320 130 L340 110 L362 132 L346 128 L338 118 L328 130 Z M580 108 L600 90 L622 112 L606 108 L598 98 L588 110 Z"
-        fill="#fdfdfd"
-        opacity="0.85"
+        fill="#917db3"
+        opacity="0.4"
       />
 
       {/* mid range */}
       <path
         d="M0 320 L160 210 L280 290 L420 170 L560 300 L700 190 L840 310 L980 200 L1120 320 L1280 220 L1440 300 V500 H0 Z"
         fill="url(#mtn-mid)"
-        opacity="0.8"
+        opacity="0.9"
       />
       <path
         d="M400 190 L420 170 L444 194 L426 190 L418 178 L406 192 Z M960 220 L980 200 L1004 224 L986 220 L978 208 L966 222 Z"
-        fill="#fdfdfd"
-        opacity="0.9"
+        fill="#77619e"
+        opacity="0.5"
       />
 
       {/* front range, most saturated */}
@@ -405,8 +434,8 @@ function Mountains() {
       />
       <path
         d="M480 250 L500 230 L526 256 L506 251 L498 240 L486 253 Z"
-        fill="#fdfdfd"
-        opacity="0.95"
+        fill="#66508f"
+        opacity="0.6"
       />
     </svg>
   );
@@ -421,7 +450,7 @@ function GrassField() {
         y: 58 + Math.random() * 40,
         h: 10 + Math.random() * 16,
         tilt: -12 + Math.random() * 24,
-        shade: Math.random() > 0.5 ? '#4a8a3a' : '#6fae52',
+        shade: Math.random() > 0.5 ? '#1f382a' : '#2b4d3c',
       })),
     [],
   );
@@ -433,7 +462,7 @@ function GrassField() {
       preserveAspectRatio="none"
     >
       {/* soft ground shading so the grass has some depth */}
-      <rect x="0" y="55" width="100" height="45" fill="#7fb85f" opacity="0.25" />
+      <rect x="0" y="55" width="100" height="45" fill="#18332a" opacity="0.6" />
       {blades.map((b, i) => (
         <path
           key={i}
