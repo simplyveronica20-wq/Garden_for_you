@@ -103,8 +103,12 @@ export function Garden({ state, audio }: GardenProps) {
           'linear-gradient(180deg, #b5dff0 0%, #dcf0e5 22%, #f2f7d4 38%, #dff2bc 52%, #c3e39b 68%, #93c970 85%, #6eb855 100%)',
       }}
     >
-      {/* glowing morning sun */}
+      {/* glowing golden sun */}
       <Sun />
+
+      {/* magical birds flying across the sky */}
+      <Bird delay={2} top="15%" />
+      <Bird delay={14} top="25%" scale={0.6} />
 
       {/* hazy morning mountains */}
       <Mountains />
@@ -306,49 +310,78 @@ function Sun() {
       className="absolute pointer-events-none"
       style={{ top: '6%', left: '50%', transform: 'translateX(-50%)', width: 340, height: 340 }}
     >
-      {/* warm realistic sun glow */}
+      {/* warm glowing aura */}
       <div
         className="absolute inset-0 rounded-full"
         style={{
           background:
-            'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,245,210,0.8) 15%, rgba(255,230,160,0.4) 35%, rgba(255,220,130,0.1) 60%, rgba(255,220,130,0) 80%)',
-          boxShadow: '0 0 100px 30px rgba(255, 240, 180, 0.5)',
+            'radial-gradient(circle, rgba(255,250,220,1) 0%, rgba(255,235,160,0.6) 25%, rgba(255,220,130,0.2) 50%, rgba(255,220,130,0) 75%)',
+          boxShadow: '0 0 120px 40px rgba(255, 230, 150, 0.5)',
         }}
       />
-      {/* lens flares for realism */}
+      {/* radiant sun rays */}
+      <svg viewBox="0 0 340 340" className="absolute inset-0" style={{ animation: 'breathe 8s ease-in-out infinite' }}>
+        {Array.from({ length: 16 }).map((_, i) => {
+          const angle = (360 / 16) * i;
+          return (
+            <line
+              key={i}
+              x1="170"
+              y1="170"
+              x2="170"
+              y2="20"
+              stroke="rgba(255,235,160,0.6)"
+              strokeWidth="4"
+              strokeLinecap="round"
+              transform={`rotate(${angle} 170 170)`}
+            />
+          );
+        })}
+      </svg>
+      {/* crisp golden core */}
       <div
         className="absolute rounded-full"
         style={{
-          top: '55%',
-          left: '55%',
-          width: '40%',
-          height: '40%',
-          background: 'rgba(255,255,255,0.1)',
-          border: '1px solid rgba(255,255,255,0.2)',
+          top: '38%',
+          left: '38%',
+          width: '24%',
+          height: '24%',
+          background: 'radial-gradient(circle at 35% 35%, #fffdf0 0%, #ffdf87 70%, #f5b041 100%)',
+          boxShadow: '0 0 30px 10px rgba(255,220,130,0.8)',
         }}
       />
-      <div
-        className="absolute rounded-full"
-        style={{
-          top: '75%',
-          left: '75%',
-          width: '15%',
-          height: '15%',
-          background: 'rgba(200,240,255,0.15)',
-          filter: 'blur(2px)',
-        }}
-      />
-      <div
-        className="absolute rounded-full"
-        style={{
-          top: '90%',
-          left: '90%',
-          width: '8%',
-          height: '8%',
-          background: 'rgba(255,220,180,0.2)',
-          filter: 'blur(1px)',
-        }}
-      />
+    </div>
+  );
+}
+
+// ---------- Bird ----------
+function Bird({ delay, top, scale = 1 }: { delay: number; top: string; scale?: number }) {
+  return (
+    <div
+      className="absolute pointer-events-none"
+      style={{
+        top,
+        left: '-10%',
+        animation: `float-across 25s linear infinite ${delay}s`,
+        transform: `scale(${scale})`,
+        opacity: 0,
+      }}
+    >
+      <svg width="40" height="20" viewBox="0 0 40 20" style={{ animation: 'wing-flap 1.5s ease-in-out infinite' }}>
+        <path
+          d="M 0 10 Q 10 0 20 10 Q 30 0 40 10 Q 30 15 20 12 Q 10 15 0 10 Z"
+          fill="#3a2a5c"
+          opacity="0.6"
+        />
+      </svg>
+      <style>{`
+        @keyframes float-across {
+          0% { transform: translateX(0vw) scale(${scale}); opacity: 0; }
+          10% { opacity: 0.8; }
+          90% { opacity: 0.8; }
+          100% { transform: translateX(120vw) scale(${scale}); opacity: 0; }
+        }
+      `}</style>
     </div>
   );
 }
