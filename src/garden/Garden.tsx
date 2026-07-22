@@ -451,44 +451,79 @@ function House() {
     <div
       className="absolute pointer-events-none"
       style={{
-        right: '12%',
-        bottom: '41%', // sitting right on the front hill
-        width: 120,
-        height: 120,
-        transform: 'scale(0.8)',
+        right: '4%',
+        bottom: '39%',
+        width: 180,
+        height: 150,
       }}
     >
-      <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-lg">
-        {/* house body */}
-        <path d="M 20 50 L 80 50 L 80 90 L 20 90 Z" fill="#d9c08a" />
-        {/* wood beams */}
-        <path d="M 20 50 L 20 90 M 80 50 L 80 90 M 20 90 L 80 90 M 20 50 L 80 50" stroke="#5a4a2e" strokeWidth="3" />
-        <path d="M 35 50 L 35 90 M 65 50 L 65 90 M 50 50 L 50 90" stroke="#8a6f4a" strokeWidth="1" opacity="0.5" />
-        {/* chimney */}
-        <rect x="65" y="25" width="12" height="25" fill="#a23b3b" stroke="#5a4a2e" strokeWidth="2" />
-        {/* roof */}
-        <path d="M 10 50 L 50 15 L 90 50 Z" fill="#a23b3b" stroke="#5a4a2e" strokeWidth="3" strokeLinejoin="round" />
-        {/* glowing window */}
-        <rect x="35" y="60" width="12" height="15" rx="2" fill="#fff5d0" stroke="#5a4a2e" strokeWidth="2" />
-        <line x1="41" y1="60" x2="41" y2="75" stroke="#5a4a2e" strokeWidth="2" />
-        <line x1="35" y1="67.5" x2="47" y2="67.5" stroke="#5a4a2e" strokeWidth="2" />
-        {/* window glow */}
-        <circle cx="41" cy="67.5" r="18" fill="#ffdf87" opacity="0.3" filter="blur(4px)" />
-        {/* door */}
-        <path d="M 58 65 L 72 65 L 72 90 L 58 90 Z" fill="#8a6f4a" stroke="#5a4a2e" strokeWidth="2" />
-        <circle cx="70" cy="78" r="1.5" fill="#f5d76e" />
+      <svg viewBox="0 0 200 160" className="w-full h-full drop-shadow-2xl">
+        {/* chimneys */}
+        <rect x="75" y="15" width="8" height="25" fill="#9e4c3d" stroke="#4a3b2c" strokeWidth="1" />
+        <rect x="85" y="10" width="8" height="30" fill="#9e4c3d" stroke="#4a3b2c" strokeWidth="1" />
         
         {/* smoke animation */}
-        <circle cx="71" cy="20" r="4" fill="white" opacity="0.6">
-          <animate attributeName="cy" values="20;0" dur="4s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0.6;0" dur="4s" repeatCount="indefinite" />
-          <animate attributeName="cx" values="71;76" dur="4s" repeatCount="indefinite" />
+        <circle cx="89" cy="5" r="5" fill="white" opacity="0.5">
+          <animate attributeName="cy" values="5;-15" dur="3s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.5;0" dur="3s" repeatCount="indefinite" />
+          <animate attributeName="cx" values="89;95" dur="3s" repeatCount="indefinite" />
         </circle>
-        <circle cx="71" cy="25" r="3" fill="white" opacity="0.6">
-          <animate attributeName="cy" values="25;5" dur="4s" repeatCount="indefinite" begin="2s" />
-          <animate attributeName="opacity" values="0.6;0" dur="4s" repeatCount="indefinite" begin="2s" />
-          <animate attributeName="cx" values="71;66" dur="4s" repeatCount="indefinite" begin="2s" />
-        </circle>
+
+        {/* main brick body */}
+        <path d="M 30 70 L 170 70 L 170 150 L 30 150 Z" fill="#9e4c3d" />
+        {/* brick texture lines */}
+        <path d="M 30 90 L 170 90 M 30 110 L 170 110 M 30 130 L 170 130" stroke="#7a3427" strokeWidth="1" opacity="0.6" />
+        
+        {/* right gable timber frame body */}
+        <path d="M 110 35 L 170 70 L 110 70 Z" fill="#e8dac5" />
+        <path d="M 110 70 L 170 70 L 170 150 L 110 150 Z" fill="#e8dac5" />
+        {/* timber frame structure */}
+        <path d="M 110 35 L 110 150 M 170 70 L 170 150 M 110 70 L 170 70 M 110 110 L 170 110 M 140 70 L 140 150 M 110 70 L 140 110 M 170 70 L 140 110" stroke="#4a3b2c" strokeWidth="3" />
+        
+        {/* left lower roof */}
+        <path d="M 20 70 L 115 30 L 115 70 Z" fill="#7d342c" />
+        
+        {/* main roof lines */}
+        <path d="M 15 75 L 110 35 L 175 75" fill="none" stroke="#7d342c" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 15 75 L 110 35 L 175 75" fill="none" stroke="#5a211a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
+
+        {/* windows */}
+        {/* right bottom */}
+        <rect x="125" y="120" width="30" height="20" fill="white" stroke="#4a3b2c" strokeWidth="1" />
+        <rect x="128" y="123" width="10" height="14" fill="#2a3b45" />
+        <rect x="142" y="123" width="10" height="14" fill="#2a3b45" />
+        {/* right top */}
+        <rect x="125" y="80" width="30" height="20" fill="white" stroke="#4a3b2c" strokeWidth="1" />
+        <rect x="128" y="83" width="10" height="14" fill="#2a3b45" />
+        <rect x="142" y="83" width="10" height="14" fill="#2a3b45" />
+        {/* left bottom */}
+        <rect x="45" y="115" width="25" height="25" fill="white" stroke="#4a3b2c" strokeWidth="1" />
+        <rect x="48" y="118" width="8" height="19" fill="#2a3b45" />
+        <rect x="59" y="118" width="8" height="19" fill="#2a3b45" />
+
+        {/* door */}
+        <path d="M 85 110 L 105 110 L 105 150 L 85 150 Z" fill="#f0f0f0" stroke="#4a3b2c" strokeWidth="1.5" />
+        <rect x="88" y="115" width="6" height="12" fill="#2a3b45" />
+        <rect x="96" y="115" width="6" height="12" fill="#2a3b45" />
+
+        {/* Wisteria (cascading purple flowers on the left) */}
+        <g opacity="0.95">
+          <circle cx="35" cy="75" r="12" fill="#75568f" />
+          <circle cx="45" cy="70" r="14" fill="#8868a8" />
+          <circle cx="55" cy="78" r="10" fill="#9f81bd" />
+          <circle cx="30" cy="85" r="10" fill="#8868a8" />
+          <circle cx="40" cy="95" r="8" fill="#75568f" />
+          <circle cx="45" cy="105" r="6" fill="#9f81bd" />
+          <circle cx="35" cy="100" r="7" fill="#8868a8" />
+          <circle cx="55" cy="90" r="9" fill="#75568f" />
+          <circle cx="65" cy="85" r="11" fill="#8868a8" />
+          <circle cx="72" cy="78" r="9" fill="#9f81bd" />
+          <circle cx="38" cy="115" r="5" fill="#75568f" />
+          {/* leaves mixed in */}
+          <circle cx="45" cy="65" r="8" fill="#4b783f" />
+          <circle cx="65" cy="70" r="10" fill="#3c6630" />
+          <circle cx="30" cy="65" r="9" fill="#4b783f" />
+        </g>
       </svg>
     </div>
   );
@@ -498,11 +533,11 @@ function House() {
 function GrassField() {
   const blades = useMemo(
     () =>
-      Array.from({ length: 120 }).map(() => ({
+      Array.from({ length: 400 }).map(() => ({
         x: Math.random() * 1440,
         y: 350 + Math.random() * 160,
-        h: 20 + Math.random() * 25,
-        tilt: -20 + Math.random() * 40,
+        h: 6 + Math.random() * 8, // very fine tiny blades
+        tilt: -10 + Math.random() * 20,
         shade: Math.random() > 0.5 ? '#5c9c45' : '#7abd5a',
       })),
     [],
@@ -519,22 +554,38 @@ function GrassField() {
           <stop offset="0%" stopColor="#a3d674" />
           <stop offset="100%" stopColor="#4a8a3a" />
         </linearGradient>
+        
+        {/* realistic grassy noise texture */}
+        <filter id="grass-noise" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="3" result="noise" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0  1 0 0 0 0  0 0 0 0 0  0 0 0 0.15 0" in="noise" />
+        </filter>
+        <pattern id="grass-pattern" width="200" height="200" patternUnits="userSpaceOnUse">
+          <rect width="200" height="200" filter="url(#grass-noise)" />
+        </pattern>
       </defs>
       
-      {/* soft curved ground so there's no harsh horizontal seam line */}
+      {/* soft curved ground */}
       <path
         d="M 0 360 Q 360 320 720 340 T 1440 330 V 500 H 0 Z"
         fill="url(#grass-gradient)"
-        opacity="0.6"
+        opacity="0.9"
+      />
+      
+      {/* noise overlay mapping to realistic grass texture */}
+      <path
+        d="M 0 360 Q 360 320 720 340 T 1440 330 V 500 H 0 Z"
+        fill="url(#grass-pattern)"
+        style={{ mixBlendMode: 'overlay' }}
       />
 
-      {/* elegant tapering grass blades */}
+      {/* fine tiny blades sprinkled for depth */}
       {blades.map((b, i) => (
         <path
           key={i}
-          d={`M ${b.x} ${b.y} Q ${b.x + b.tilt * 0.5} ${b.y - b.h * 0.5} ${b.x + b.tilt} ${b.y - b.h} Q ${b.x + b.tilt * 0.5 + 2} ${b.y - b.h * 0.5} ${b.x + 4} ${b.y} Z`}
+          d={`M ${b.x} ${b.y} Q ${b.x + b.tilt * 0.5} ${b.y - b.h * 0.5} ${b.x + b.tilt} ${b.y - b.h} Q ${b.x + b.tilt * 0.5 + 1} ${b.y - b.h * 0.5} ${b.x + 2} ${b.y} Z`}
           fill={b.shade}
-          opacity="0.85"
+          opacity="0.6"
         />
       ))}
     </svg>
