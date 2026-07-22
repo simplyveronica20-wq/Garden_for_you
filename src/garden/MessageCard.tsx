@@ -38,12 +38,12 @@ export function MessageCard({ message, onClose }: MessageCardProps) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-md max-h-[85vh] overflow-y-auto parchment-scroll text-cream"
+        className="relative w-full max-w-md max-h-[85vh] overflow-y-auto parchment-scroll text-ink"
         style={{
-          background: 'linear-gradient(180deg, rgba(42,32,74,0.92) 0%, rgba(24,18,48,0.96) 100%)',
+          background: 'linear-gradient(180deg, #fbf7ec 0%, #f3e4c1 100%)',
           borderRadius: '24px',
-          border: '2px solid rgba(217, 192, 138, 0.4)',
-          boxShadow: '0 0 60px rgba(160, 140, 255, 0.25), inset 0 0 40px rgba(217, 192, 138, 0.08)',
+          border: '2px solid #d9c08a',
+          boxShadow: '0 0 60px rgba(255, 245, 208, 0.7), inset 0 0 40px rgba(217, 192, 138, 0.3)',
           animation: 'scroll-unfurl 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
           transformOrigin: 'top center',
         }}
@@ -61,9 +61,9 @@ export function MessageCard({ message, onClose }: MessageCardProps) {
           aria-label="close"
           className="absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center spring hover:scale-110"
           style={{
-            background: 'radial-gradient(circle at 35% 35%, #7a6ba8 0%, #463b6d 100%)',
-            boxShadow: '0 0 16px rgba(180, 150, 255, 0.6), inset 0 -2px 4px rgba(0,0,0,0.4)',
-            border: '2px solid #9486c4',
+            background: 'radial-gradient(circle at 35% 35%, #e28e8e 0%, #ba5353 100%)',
+            boxShadow: '0 0 16px rgba(186, 83, 83, 0.4), inset 0 -2px 4px rgba(0,0,0,0.15)',
+            border: '2px solid #a44848',
           }}
         >
           <X size={18} className="text-cream" strokeWidth={2.5} />
@@ -79,16 +79,16 @@ export function MessageCard({ message, onClose }: MessageCardProps) {
           )}
 
           {message.title && (
-            <h3 className="font-serif italic text-3xl text-center text-cream mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+            <h3 className="font-serif italic text-3xl text-center text-ink mb-4 drop-shadow-[0_2px_4px_rgba(255,255,255,0.5)]">
               {message.title}
             </h3>
           )}
 
           {/* divider */}
           <div className="flex items-center justify-center gap-2 mb-6">
-            <span className="h-px w-16 bg-cream opacity-30" />
+            <span className="h-px w-16 bg-parchmentDeep opacity-40" />
             <span className="text-butterDeep text-sm drop-shadow-[0_0_8px_rgba(255,220,130,0.6)]">✨</span>
-            <span className="h-px w-16 bg-cream opacity-30" />
+            <span className="h-px w-16 bg-parchmentDeep opacity-40" />
           </div>
 
           {!revealed ? (
@@ -129,7 +129,7 @@ function Riddle({
 }) {
   return (
     <div className="text-center">
-      <p className="font-script text-2xl text-cream leading-relaxed mb-6 drop-shadow-md">
+      <p className="font-script text-2xl text-ink leading-relaxed mb-6 drop-shadow-sm">
         {message.riddle}
       </p>
       <input
@@ -138,26 +138,26 @@ function Riddle({
         onChange={(e) => setAnswer(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && onCheck()}
         placeholder="your answer…"
-        className={`w-full px-4 py-3 rounded-full text-center font-body text-cream bg-white/10 border-2 outline-none transition-all placeholder:text-cream/40 backdrop-blur-sm ${
-          wrong ? 'border-blush animate-pulse' : 'border-white/20 focus:border-butterDeep focus:bg-white/20'
+        className={`w-full px-4 py-3 rounded-full text-center font-body text-ink bg-white/50 border-2 outline-none transition-all placeholder:text-ink/30 backdrop-blur-sm ${
+          wrong ? 'border-wax animate-pulse' : 'border-parchmentDeep/50 focus:border-butterDeep focus:bg-white/70'
         }`}
       />
       <div className="flex items-center justify-center gap-3 mt-6">
         <button
           onClick={onCheck}
-          className="px-6 py-2.5 rounded-full font-body font-semibold text-twilight bg-butterDeep spring hover:scale-105 hover:bg-butter drop-shadow-[0_0_12px_rgba(255,220,130,0.4)]"
+          className="px-6 py-2.5 rounded-full font-body font-semibold text-twilight bg-butterDeep spring hover:scale-105 hover:bg-butter drop-shadow-[0_0_12px_rgba(255,220,130,0.6)]"
         >
           reveal it
         </button>
         <button
           onClick={() => setShowHint(true)}
-          className="px-5 py-2.5 rounded-full font-body text-cream bg-white/10 spring hover:bg-white/20 text-sm backdrop-blur-sm"
+          className="px-5 py-2.5 rounded-full font-body text-ink bg-parchmentDeep/20 spring hover:bg-parchmentDeep/40 text-sm backdrop-blur-sm"
         >
           {showHint ? message.hint : 'need a hint?'}
         </button>
       </div>
       {wrong && (
-        <p className="mt-4 text-blushLight font-body text-sm drop-shadow-md">not quite… try again ✨</p>
+        <p className="mt-4 text-wax font-body text-sm drop-shadow-sm">not quite… try again ✨</p>
       )}
     </div>
   );
@@ -170,9 +170,9 @@ function Reveal({ message }: { message: FlowerMessage }) {
         <div
           className="relative mx-auto p-2.5 rounded-xl"
           style={{
-            background: 'rgba(255,255,255,0.05)',
-            border: '2px solid rgba(255,255,255,0.2)',
-            boxShadow: '0 8px 30px rgba(0,0,0,0.3)',
+            background: 'rgba(255,255,255,0.3)',
+            border: '2px solid rgba(217,192,138,0.5)',
+            boxShadow: '0 8px 30px rgba(217,192,138,0.2)',
           }}
         >
           <img
@@ -186,10 +186,10 @@ function Reveal({ message }: { message: FlowerMessage }) {
           <span className="absolute -bottom-3 -right-3 text-butterDeep text-2xl rotate-[15deg] drop-shadow-[0_0_8px_rgba(255,220,130,0.8)]">✦</span>
         </div>
         {message.caption && (
-          <p className="font-script text-2xl text-cream mt-5 drop-shadow-md">{message.caption}</p>
+          <p className="font-script text-2xl text-ink mt-5 drop-shadow-sm">{message.caption}</p>
         )}
         {message.body && (
-          <p className="font-body text-cream/90 mt-3 leading-relaxed text-sm drop-shadow-sm">{message.body}</p>
+          <p className="font-body text-ink/90 mt-3 leading-relaxed text-sm drop-shadow-sm">{message.body}</p>
         )}
       </div>
     );
@@ -197,7 +197,7 @@ function Reveal({ message }: { message: FlowerMessage }) {
 
   return (
     <div className="text-center">
-      <p className="font-script text-[26px] text-cream leading-relaxed whitespace-pre-line drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+      <p className="font-script text-[26px] text-ink leading-relaxed whitespace-pre-line drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
         {message.body}
       </p>
     </div>
@@ -214,11 +214,11 @@ function FloralCorner({ className = '' }: { className?: string }) {
     >
       <path
         d="M4 4 Q10 6 12 12 Q6 10 4 4"
-        fill="#b496ff"
-        opacity="0.3"
+        fill="#a8c69a"
+        opacity="0.5"
       />
       <circle cx="12" cy="12" r="2.5" fill="#f5d76e" opacity="0.9" />
-      <path d="M4 4 Q6 10 12 12" stroke="#d4c290" strokeWidth="1" fill="none" opacity="0.7" />
+      <path d="M4 4 Q6 10 12 12" stroke="#6f9c63" strokeWidth="1" fill="none" opacity="0.6" />
     </svg>
   );
 }
