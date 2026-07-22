@@ -45,15 +45,14 @@ export interface FlowerMessage {
   hint?: string;
 }
 
-// Helper to scatter flowers naturally (not a grid).
-// These positions are hand-tuned to look like a real garden bed.
+// Hand-tuned positions for exactly 19 flowers, spaced clearly apart
+// (no overlaps) so each bloom stays individually identifiable in the
+// garden bed instead of blending together.
 const POSITIONS: Array<[number, number]> = [
-  [22, 68], [48, 74], [70, 66], [34, 80], [58, 86],
-  [16, 82], [82, 78], [40, 62], [64, 70], [28, 72],
-  [52, 64], [76, 84], [44, 78], [20, 58], [66, 58],
-  [38, 70], [88, 66], [50, 80], [30, 64], [72, 72],
-  [46, 58], [18, 70], [84, 74], [56, 76], [36, 84],
-  [62, 82], [26, 78], [78, 60], [42, 66], [54, 70],
+  [10, 57], [30, 58], [50, 56], [70, 59], [90, 57],
+  [18, 68], [38, 67], [58, 69], [78, 68],
+  [8, 79], [26, 78], [44, 80], [62, 77], [80, 79],
+  [16, 89], [36, 88], [56, 90], [76, 89], [94, 88],
 ];
 
 const TYPES: FlowerType[] = ['rose', 'daisy', 'tulip', 'sunflower', 'lily', 'cherry', 'poppy'];

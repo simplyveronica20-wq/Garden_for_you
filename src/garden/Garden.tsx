@@ -55,6 +55,19 @@ export function Garden({ state, audio }: GardenProps) {
     }
   }, [newToday]);
 
+  // The single most-recently-bloomed flower — this is "today's" flower,
+  // and stays marked as such (not just during the brief bloom animation)
+  // so it's always clear which of the 19 is new.
+  const latestBloomDay = useMemo(() => {
+    let latest: number | null = null;
+    for (const f of FLOWERS) {
+      if (state.unlockedDays.has(f.day) && (state.seenDays.has(f.day) || bloomedToday === f.day)) {
+        latest = f.day;
+      }
+    }
+    return latest;
+  }, [state.unlockedDays, state.seenDays, bloomedToday]);
+
   // Trigger celebration when garden is fully grown.
   useEffect(() => {
     if (state.bloomCount === state.total && !state.celebrated) {
@@ -119,6 +132,7 @@ export function Garden({ state, audio }: GardenProps) {
           const seen = state.seenDays.has(f.day);
           const isBloomingToday = bloomedToday === f.day;
           const isBloomed = state.adminMode || seen || isBloomingToday;
+          const isTodaysBloom = !state.adminMode && f.day === latestBloomDay;
 
           let bloomState: BloomState;
           if (!unlocked) bloomState = 'locked';
@@ -131,16 +145,31 @@ export function Garden({ state, audio }: GardenProps) {
           return (
             <button
               key={i}
-              aria-label={`flower ${f.day}`}
+              aria-label={`flower ${f.day}${isTodaysBloom ? ' — today’s bloom' : ''}`}
               className="absolute group spring hover:scale-110"
               style={{
                 left: `${f.x}%`,
                 top: `${f.y}%`,
                 transform: 'translate(-50%, -50%)',
-                zIndex: isBloomingToday ? 30 : 10,
+                zIndex: isBloomingToday || isTodaysBloom ? 30 : 10,
               }}
               onClick={() => handleFlowerClick(f)}
             >
+              {/* persistent spotlight ring marking today's new bloom, so it
+                  stays unmistakable among all 19 flowers, not just during
+                  the initial bloom animation */}
+              {isTodaysBloom && (
+                <span
+                  className="absolute rounded-full pointer-events-none"
+                  style={{
+                    inset: '-38%',
+                    background:
+                      'radial-gradient(circle, rgba(255,245,208,0.55) 0%, rgba(255,220,130,0.25) 45%, rgba(255,220,130,0) 75%)',
+                    animation: 'breathe 2.6s ease-in-out infinite',
+                  }}
+                />
+              )}
+
               {/* hover glow */}
               {isBloomed && (
                 <span
@@ -152,6 +181,7 @@ export function Garden({ state, audio }: GardenProps) {
                   }}
                 />
               )}
+
               <Flower
                 type={f.type}
                 state={bloomState}
@@ -159,6 +189,38 @@ export function Garden({ state, audio }: GardenProps) {
                 size={size}
                 index={i}
               />
+
+              {/* "today's bloom" tag — always visible on the newest flower */}
+              {isTodaysBloom && (
+                <span
+                  className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap px-2.5 py-1 rounded-full font-body font-semibold text-[11px] pointer-events-none anim-fade-in"
+                  style={{
+                    bottom: '100%',
+                    marginBottom: 6,
+                    background: 'rgba(255,245,208,0.95)',
+                    color: '#5a1a1a',
+                    boxShadow: '0 2px 10px rgba(255,220,130,0.6)',
+                  }}
+                >
+                  ✨ today's bloom
+                </span>
+              )}
+
+              {/* day tag — appears on hover for any bloomed flower, so each
+                  one stays identifiable at a glance without cluttering
+                  the whole scene by default */}
+              {isBloomed && !isTodaysBloom && (
+                <span
+                  className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-0.5 rounded-full font-body text-[10px] text-twilight opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    bottom: '100%',
+                    marginBottom: 4,
+                    background: 'rgba(255,245,208,0.9)',
+                  }}
+                >
+                  day {f.day}
+                </span>
+              )}
             </button>
           );
         })}
