@@ -369,7 +369,7 @@ function Bird({ delay, top, scale = 1 }: { delay: number; top: string; scale?: n
     >
       <svg width="40" height="20" viewBox="0 0 40 20" style={{ animation: 'wing-flap 1.5s ease-in-out infinite' }}>
         <path
-          d="M 0 10 Q 10 0 20 10 Q 30 0 40 10 Q 30 15 20 12 Q 10 15 0 10 Z"
+          d="M 2 12 Q 10 2 20 10 Q 30 2 38 12 Q 30 14 20 11 Q 10 14 2 12 Z"
           fill="#3a2a5c"
           opacity="0.6"
         />
@@ -397,28 +397,28 @@ function Mountains() {
     >
       <defs>
         <linearGradient id="mtn-back" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#c5d5ea" />
-          <stop offset="100%" stopColor="#a3b8d6" />
+          <stop offset="0%" stopColor="#e8d5f0" />
+          <stop offset="100%" stopColor="#c1cbe6" />
         </linearGradient>
         <linearGradient id="mtn-mid" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#96adca" />
-          <stop offset="100%" stopColor="#7590b4" />
+          <stop offset="0%" stopColor="#bacbe6" />
+          <stop offset="100%" stopColor="#98b4d4" />
         </linearGradient>
         <linearGradient id="mtn-front" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#6b8ca8" />
-          <stop offset="100%" stopColor="#4c6a85" />
+          <stop offset="0%" stopColor="#87a8c9" />
+          <stop offset="100%" stopColor="#678db3" />
         </linearGradient>
         <filter id="blur-distant" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="3" />
+          <feGaussianBlur stdDeviation="4" />
         </filter>
         <filter id="blur-mid" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="1.5" />
+          <feGaussianBlur stdDeviation="2" />
         </filter>
       </defs>
 
       {/* back range, distant hazy mountains with smooth peaks */}
       <path
-        d="M0 280 Q 80 180 160 220 T 320 120 T 480 200 T 640 100 T 800 180 T 960 90 T 1120 160 T 1280 110 T 1440 210 V 500 H 0 Z"
+        d="M 0 320 Q 150 120 350 280 Q 550 440 750 200 Q 950 -40 1150 220 Q 1300 420 1440 250 V 500 H 0 Z"
         fill="url(#mtn-back)"
         opacity="0.8"
         filter="url(#blur-distant)"
@@ -426,7 +426,7 @@ function Mountains() {
 
       {/* mid range, rolling hills and lower mountains */}
       <path
-        d="M0 340 Q 120 220 240 290 T 500 180 T 760 300 T 1020 190 T 1260 290 T 1440 220 V 500 H 0 Z"
+        d="M 0 350 Q 200 200 450 320 Q 700 440 950 260 Q 1200 80 1440 300 V 500 H 0 Z"
         fill="url(#mtn-mid)"
         opacity="0.9"
         filter="url(#blur-mid)"
@@ -434,7 +434,7 @@ function Mountains() {
 
       {/* front range, rolling foreground hills */}
       <path
-        d="M0 400 Q 180 280 360 360 T 720 250 T 1080 370 T 1440 280 V 500 H 0 Z"
+        d="M 0 420 Q 250 320 500 380 Q 750 440 1000 340 Q 1250 240 1440 380 V 500 H 0 Z"
         fill="url(#mtn-front)"
       />
     </svg>
