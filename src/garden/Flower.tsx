@@ -161,28 +161,27 @@ export function Flower({ type, state, rare, size = 80, index = 0 }: FlowerProps)
         animationDelay: `${index * 0.3}s`,
       }}
     >
-      <img
-        src={FLOWER_PHOTOS[type]}
-        alt={`${rare ? 'a rare golden ' : ''}${type} in bloom`}
-        loading="lazy"
+      <svg
+        viewBox="0 0 100 100"
         style={{
           position: 'absolute',
           inset: 0,
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
-          borderRadius: '50%',
           filter: rare
-            ? 'saturate(1.3) brightness(1.08) drop-shadow(0 0 10px rgba(245,215,110,0.85))'
-            : 'saturate(1.15)',
-          WebkitMaskImage: 'radial-gradient(circle, black 58%, transparent 78%)',
-          maskImage: 'radial-gradient(circle, black 58%, transparent 78%)',
-          boxShadow: '0 6px 14px rgba(36,24,68,0.28)',
-          transform: isBloomed ? 'scale(1)' : 'scale(0.3)',
-          opacity: isBloomed ? 1 : 0,
-          transition: 'transform 0.6s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease-out',
+            ? 'drop-shadow(0 0 12px rgba(245,215,110,0.85)) saturate(1.2)'
+            : 'drop-shadow(0 4px 8px rgba(36,24,68,0.25)) saturate(1.1)',
         }}
-      />
+      >
+        <FlowerHead
+          type={type}
+          palette={palette}
+          unfurled={petalsUnfurled}
+          rare={rare}
+          index={index}
+          ids={ids}
+        />
+      </svg>
 
       {/* bloom sparkle burst during blooming */}
       {isBlooming && (
