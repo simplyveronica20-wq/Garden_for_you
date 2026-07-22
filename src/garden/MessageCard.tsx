@@ -129,7 +129,7 @@ function Riddle({
 }) {
   return (
     <div className="text-center">
-      <p className="font-script text-2xl text-ink leading-relaxed mb-6 drop-shadow-sm">
+      <p className="font-serif text-[22px] text-ink leading-relaxed mb-6 drop-shadow-sm">
         {message.riddle}
       </p>
       <input
@@ -186,7 +186,7 @@ function Reveal({ message }: { message: FlowerMessage }) {
           <span className="absolute -bottom-3 -right-3 text-butterDeep text-2xl rotate-[15deg] drop-shadow-[0_0_8px_rgba(255,220,130,0.8)]">✦</span>
         </div>
         {message.caption && (
-          <p className="font-script text-2xl text-ink mt-5 drop-shadow-sm">{message.caption}</p>
+          <p className="font-serif italic text-2xl text-ink mt-5 drop-shadow-sm">{message.caption}</p>
         )}
         {message.body && (
           <p className="font-body text-ink/90 mt-3 leading-relaxed text-sm drop-shadow-sm">{message.body}</p>
@@ -197,7 +197,7 @@ function Reveal({ message }: { message: FlowerMessage }) {
 
   return (
     <div className="text-center">
-      <p className="font-script text-[26px] text-ink leading-relaxed whitespace-pre-line drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
+      <p className="font-serif text-[22px] font-medium text-ink leading-relaxed whitespace-pre-line drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
         {message.body}
       </p>
     </div>
